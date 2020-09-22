@@ -32,8 +32,7 @@ final String tzDataDefaultPath = p.join('data', tzDataDefaultFilename);
 
 // Load file
 Future<List<int>> _loadAsBytes(String path) async {
-  var uri = await Isolate.resolvePackageUri(
-      Uri(scheme: 'package', path: 'timezone/$path'));
+  var uri = Uri(scheme: 'package', path: 'timezone/$path');
   return File(p.fromUri(uri)).readAsBytes();
 }
 
