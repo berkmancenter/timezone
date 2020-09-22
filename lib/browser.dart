@@ -14,9 +14,9 @@
 library timezone.browser;
 
 import 'dart:async';
-import 'dart:html';
 import 'dart:typed_data';
 
+import 'package:node_http/node_http.dart' as http;
 import 'package:timezone/timezone.dart';
 
 export 'package:timezone/timezone.dart'
@@ -45,10 +45,9 @@ const String tzDataDefaultPath =
 /// });
 /// ```
 Future<void> initializeTimeZone([String path = tzDataDefaultPath]) {
-  return HttpRequest.request(path,
-          method: 'GET',
-          responseType: 'arraybuffer',
-          mimeType: 'application/octet-stream')
+  return http
+      .get(path,
+          responseType: 'arraybuffer', mimeType: 'application/octet-stream')
       .then((req) {
     final response = req.response;
 
