@@ -15,11 +15,10 @@
 library timezone.standalone;
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:isolate';
 import 'package:path/path.dart' as p;
 import 'package:timezone/timezone.dart';
-
+import 'package:node_io/node_io.dart';
 export 'package:timezone/timezone.dart'
     show
         getLocation,
@@ -33,30 +32,9 @@ final String tzDataDefaultPath = p.join('data', tzDataDefaultFilename);
 
 // Load file
 Future<List<int>> _loadAsBytes(String path) async {
-  final script = Platform.script;
-  final scheme = Platform.script.scheme;
-
-  if (scheme.startsWith('http')) {
-    // TODO: This path is not tested. How would one get to this situation?
-    return HttpClient()
-        .getUrl(Uri(
-            scheme: script.scheme,
-            host: script.host,
-            port: script.port,
-            path: path))
-        .then((req) {
-      return req.close();
-    }).then((response) {
-      // join byte buffers
-      return response.fold(BytesBuilder(), (b, d) => b..add(d)).then((builder) {
-        return builder.takeBytes();
-      });
-    });
-  } else {
-    var uri = await Isolate.resolvePackageUri(
-        Uri(scheme: 'package', path: 'timezone/$path'));
-    return File(p.fromUri(uri)).readAsBytes();
-  }
+  var uri = await Isolate.resolvePackageUri(
+      Uri(scheme: 'package', path: 'timezone/$path'));
+  return File(p.fromUri(uri)).readAsBytes();
 }
 
 /// Initialize Time Zone database.
