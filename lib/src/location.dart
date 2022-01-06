@@ -47,7 +47,7 @@ class Location {
   static final int _cacheNow = DateTime.now().millisecondsSinceEpoch;
   int _cacheStart = 0;
   int _cacheEnd = 0;
-  TimeZone _cacheZone;
+  late TimeZone _cacheZone;
 
   Location(this.name, this.transitionAt, this.transitionZone, this.zones) {
     // Fill in the cache with information about right now,

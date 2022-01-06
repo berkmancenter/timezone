@@ -35,4 +35,7 @@ class LocationDatabase {
     }
     return loc;
   }
+
+  /// Clears the database of all [Location] entries.
+  void clear() => _locations.clear();
 }

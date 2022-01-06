@@ -21,6 +21,7 @@ import 'package:args/args.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 import 'package:glob/glob.dart';
+import 'package:glob/list_local_fs.dart';
 
 import 'package:timezone/tzdata.dart' as tzfile;
 import 'package:timezone/timezone.dart';
@@ -69,7 +70,7 @@ Future<String> downloadTzData(String version, String dest) async {
       await sink.close();
     }
   } finally {
-    await client.close();
+    client.close();
   }
   return outPath;
 }

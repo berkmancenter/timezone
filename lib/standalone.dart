@@ -15,11 +15,11 @@
 library timezone.standalone;
 
 import 'dart:async';
-import 'dart:isolate';
 import 'package:path/path.dart' as p;
-import 'package:timezone/timezone.dart';
 import 'package:node_io/node_io.dart';
+import 'package:timezone/timezone.dart';
 export 'package:timezone/timezone.dart'
+
     show
         getLocation,
         setLocalLocation,
@@ -48,7 +48,7 @@ Future<List<int>> _loadAsBytes(String path) async {
 ///   final detroitNow = new TZDateTime.now(detroit);
 /// });
 /// ```
-Future<void> initializeTimeZone([String path]) {
+Future<void> initializeTimeZone([String? path]) {
   path ??= tzDataDefaultPath;
   return _loadAsBytes(path).then((rawData) {
     initializeDatabase(rawData);
